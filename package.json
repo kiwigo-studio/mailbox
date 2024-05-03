@@ -9,12 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.568.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/joy": "^5.0.0-beta.36",
+    "@types/mailparser": "^3.4.4",
+    "mailparser": "^3.7.1",
     "next": "14.2.3",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "setimmediate": "^1.0.5"
   },
   "devDependencies": {
     "@types/node": "^20",
