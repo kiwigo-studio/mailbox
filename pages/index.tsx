@@ -6,6 +6,8 @@ import Content from '@/components/Content';
 import { S3Client } from '@aws-sdk/client-s3';
 import { fetchS3Items } from '@/utils/ReadFromS3Bucket';
 import { parseEmail } from '@/utils/ParseEmail';
+import { newEmailGroupList } from '@/models/email';
+import { ParsedMail } from 'mailparser';
 
 export default function Home() {
   React.useEffect(() => {
@@ -20,13 +22,21 @@ export default function Home() {
     fetchS3Items(client, 'youthgoto-email').then(async items => {
       const emailBodies = await Promise.all(items.map(async item => await item?.Body?.transformToString()));
       const parsedEmails = await Promise.all(
-        emailBodies.map(async emailBody => {
-          if (emailBody === undefined) {
-            return null;
-          }
-          return await parseEmail(emailBody);
-        }),
-      );
+        emailBodies
+          .reduce((acc: string[], item) => {
+            item && acc.push(item);
+            return acc;
+          }, [])
+          .map(async body => await parseEmail(body)),
+      )
+        .then(emails =>
+          emails.reduce((acc: ParsedMail[], item) => {
+            item && acc.push(item);
+            return acc;
+          }, []),
+        )
+        .then(emails => newEmailGroupList(emails));
+
       console.log(parsedEmails);
     });
   }, []);
