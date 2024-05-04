@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import Box from '@mui/joy/Box';
 import MailList from '@/components/MailList';
@@ -6,10 +6,12 @@ import Content from '@/components/Content';
 import { S3Client } from '@aws-sdk/client-s3';
 import { fetchS3Items } from '@/utils/ReadFromS3Bucket';
 import { parseEmail } from '@/utils/ParseEmail';
-import { newEmailGroupList } from '@/models/email';
+import { EmailGroup, newEmailGroupList } from '@/models/email';
 import { ParsedMail } from 'mailparser';
 
 export default function Home() {
+  const [emailGroups, setEmailGroups] = useState<EmailGroup[]>([]);
+
   React.useEffect(() => {
     const client = new S3Client({
       region: 'ap-northeast-1',
@@ -38,13 +40,14 @@ export default function Home() {
         .then(emails => newEmailGroupList(emails));
 
       console.log(parsedEmails);
+      setEmailGroups(parsedEmails);
     });
   }, []);
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
       <Sidebar />
-      <MailList />
+      <MailList emailGroups={emailGroups} />
       <div style={{ backgroundColor: 'black', height: '100vh', width: 1 }} />
       <Content />
     </Box>
