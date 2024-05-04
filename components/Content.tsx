@@ -190,6 +190,7 @@ function AttachmentItem({ attachment }: { attachment: Attachment }) {
         backgroundColor: 'rgb(42,44,44)',
         borderRadius: theme => theme.vars.radius.sm,
         p: 2,
+        mt: 2,
       }}
     >
       {getIcon(attachment.contentType)}
