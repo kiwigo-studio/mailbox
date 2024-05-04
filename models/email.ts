@@ -29,6 +29,7 @@ export type EmailGroup = {
   messageID: string;
   fromName: string;
   subject: string;
+  text: string;
   emails: Email[];
   date: Date;
   hasAttachment: boolean;
@@ -58,13 +59,18 @@ export function newEmailGroupList(parsedEmails: mailparser.ParsedMail[]): EmailG
       }
     }
 
-    const fromName = email.from.length > 0 ? email.from[0].name ?? email.from[0].address : 'Unknown';
+    let fromName = 'Unknown';
+
+    if (email.from.length > 0) {
+      fromName = email.from[0].name.length > 0 ? email.from[0].name : email.from[0].address;
+    }
 
     emailGroups = [
       {
         messageID: email.messageId,
         fromName,
         subject: email.subject,
+        text: parsedEmail.text ?? "This email doesn't have any content.",
         emails: [email],
         date: parsedEmail.date ?? new Date(),
         hasAttachment: email.attachments.length > 0,
