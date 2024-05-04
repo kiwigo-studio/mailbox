@@ -7,11 +7,17 @@ import Button from '@mui/joy/Button';
 
 type Props = {
   emailGroups: EmailGroup[];
+  onSelectEmailGroup: (emailGroup: EmailGroup) => void;
 };
 
-export default function MailList({ emailGroups }: Props) {
+export default function MailList({ emailGroups, onSelectEmailGroup }: Props) {
   const [selectedEmailID, setSelectedEmailID] = useState<string>('');
   const isSelected = (emailID: string) => emailID === selectedEmailID;
+
+  const handleSelectEmailGroup = (emailGroup: EmailGroup) => {
+    onSelectEmailGroup(emailGroup);
+    setSelectedEmailID(emailGroup.messageID);
+  };
 
   return (
     <Sheet
@@ -31,7 +37,7 @@ export default function MailList({ emailGroups }: Props) {
             key={group.messageID}
             variant={isSelected(group.messageID) ? 'solid' : 'plain'}
             sx={{ p: 0, width: '100%' }}
-            onClick={() => setSelectedEmailID(group.messageID)}
+            onClick={() => handleSelectEmailGroup(group)}
           >
             <MailGroupItem key={group.messageID} emailGroup={group} isSelected={isSelected(group.messageID)} />
           </Button>

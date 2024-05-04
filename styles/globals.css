@@ -8,11 +8,11 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) and (color-gamut: srgb) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 28, 30, 31;
-    --background-end-rgb: 28, 30, 31;
+    --background-start-rgb: 28, 30, 30;
+    --background-end-rgb: 28, 30, 30;
   }
 }
 
@@ -24,5 +24,15 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer utilities {
+  .html-content-content a {
+    @apply text-blue-300;
+  }
+
+  .html-content-content a:hover {
+    @apply text-blue-500 underline;
   }
 }

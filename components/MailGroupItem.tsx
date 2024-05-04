@@ -18,7 +18,8 @@ type Props = {
 };
 
 export default function MailGroupItem({ emailGroup, isSelected }: Props) {
-  const handleDatetimeString = (d: Date): string => {
+  const handleDatetimeString = (d?: Date): string => {
+    if (!d) return '';
     const date = dayjs(d);
     const aWeekAgo = dayjs().subtract(7, 'day');
 

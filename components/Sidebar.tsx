@@ -6,8 +6,15 @@ import ListItem from '@mui/joy/ListItem';
 import ListItemButton, { listItemButtonClasses } from '@mui/joy/ListItemButton';
 import ListItemContent from '@mui/joy/ListItemContent';
 import Typography from '@mui/joy/Typography';
+import { Bucket } from '@/models/bucket';
 
-export default function Sidebar() {
+type Props = {
+  buckets: Bucket[];
+  selectedBucketId: string;
+  selectBucket: (bucketId: string) => void;
+};
+
+export default function Sidebar({ buckets, selectedBucketId, selectBucket }: Props) {
   return (
     <Sheet
       className="Sidebar"
@@ -28,7 +35,7 @@ export default function Sidebar() {
         flexShrink: 0,
         flexDirection: 'column',
         gap: 2,
-        backgroundColor: 'rgba(35, 37, 38, 1)',
+        backgroundColor: 'rgb(38, 39, 39)',
         borderRadius: theme => theme.vars.radius.sm,
       }}
     >
@@ -52,13 +59,15 @@ export default function Sidebar() {
             '--ListItem-radius': theme => theme.vars.radius.sm,
           }}
         >
-          <ListItem key={'new'}>
-            <ListItemButton selected={true} onClick={() => {}}>
-              <ListItemContent>
-                <Typography level="title-sm">New</Typography>
-              </ListItemContent>
-            </ListItemButton>
-          </ListItem>
+          {buckets.map(({ id, name }) => (
+            <ListItem key={id}>
+              <ListItemButton selected={id === selectedBucketId} onClick={() => selectBucket(id)}>
+                <ListItemContent>
+                  <Typography level="title-sm">{name}</Typography>
+                </ListItemContent>
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
       </Box>
     </Sheet>
