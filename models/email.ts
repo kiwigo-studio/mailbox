@@ -1,12 +1,12 @@
 import { randomUUID } from 'crypto';
 import * as mailparser from 'mailparser';
 
-type Contact = {
+export type Contact = {
   address: string;
   name: string;
 };
 
-type Attachment = {
+export type Attachment = {
   filename: string;
   checksum: string;
   size: number;
@@ -23,6 +23,7 @@ export type Email = {
   cc: Contact[];
   attachments: Attachment[];
   html: string;
+  date: Date | undefined;
 };
 
 export type EmailGroup = {
@@ -31,7 +32,7 @@ export type EmailGroup = {
   subject: string;
   text: string;
   emails: Email[];
-  date: Date;
+  date: Date | undefined;
   hasAttachment: boolean;
 };
 
@@ -48,6 +49,7 @@ export function newEmailGroupList(parsedEmails: mailparser.ParsedMail[]): EmailG
       cc: parseContact(parsedEmail.cc),
       attachments: parseAttachments(parsedEmail.attachments),
       html: parsedEmail.html || parsedEmail.textAsHtml || '',
+      date: parsedEmail.date,
     } as Email;
 
     if (parsedEmail.inReplyTo) {
@@ -72,7 +74,7 @@ export function newEmailGroupList(parsedEmails: mailparser.ParsedMail[]): EmailG
         subject: email.subject,
         text: parsedEmail.text ?? "This email doesn't have any content.",
         emails: [email],
-        date: parsedEmail.date ?? new Date(),
+        date: parsedEmail.date,
         hasAttachment: email.attachments.length > 0,
       },
     ].concat(emailGroups);
