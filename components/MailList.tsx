@@ -4,6 +4,7 @@ import MailGroupItem from './MailGroupItem';
 import Sheet from '@mui/joy/Sheet';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
+import Typography from '@mui/joy/Typography';
 
 type Props = {
   emailGroups: EmailGroup[];
@@ -18,6 +19,10 @@ export default function MailList({ emailGroups, onSelectEmailGroup }: Props) {
     onSelectEmailGroup(emailGroup);
     setSelectedEmailID(emailGroup.messageID);
   };
+
+  if (emailGroups.length === 0) {
+    return <EmptyMailList />;
+  }
 
   return (
     <Sheet
@@ -44,5 +49,15 @@ export default function MailList({ emailGroups, onSelectEmailGroup }: Props) {
         ))}
       </Box>
     </Sheet>
+  );
+}
+
+function EmptyMailList() {
+  return (
+    <Box sx={{ display: 'flex', width: '300px', justifyContent: 'center', alignItems: 'center' }}>
+      <Typography level="body-lg" textColor="neutral.500">
+        Empty Bucket
+      </Typography>
+    </Box>
   );
 }
