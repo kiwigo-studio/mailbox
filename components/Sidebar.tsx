@@ -1,6 +1,7 @@
-import React from 'react';
-import { useBuckets } from '@/hooks/useBuckets';
+import React, { useState } from 'react';
+import { useBucketsStore } from '@/stores/bucketStore';
 import Box from '@mui/joy/Box';
+import Button from '@mui/joy/Button';
 import Sheet from '@mui/joy/Sheet';
 import Link from '@mui/joy/Link';
 import List from '@mui/joy/List';
@@ -19,7 +20,20 @@ type Props = {
 };
 
 export default function Sidebar({ selectedBucketId, selectBucket }: Props) {
-  const [buckets, setBuckets] = useBuckets();
+  const [buckets, setBuckets] = useBucketsStore();
+  const [settingMode, setSettingMode] = useState(false);
+
+  const handleAddClick = () => {
+    console.log('Add clicked');
+  };
+
+  const handleSettingClick = () => {
+    setSettingMode(true);
+  };
+
+  const handleDoneClick = () => {
+    setSettingMode(false);
+  };
 
   return (
     <Sheet
@@ -57,14 +71,21 @@ export default function Sidebar({ selectedBucketId, selectBucket }: Props) {
           },
         }}
       >
-        <Box display="flex" justifyContent="space-between">
-          <IconButton size="sm">
-            <AddCircleIcon />
-          </IconButton>
-          <IconButton size="sm">
-            <SettingIcon />
-          </IconButton>
-        </Box>
+        {!settingMode && (
+          <Box display="flex" justifyContent="space-between">
+            <IconButton size="sm" onClick={handleAddClick}>
+              <AddCircleIcon />
+            </IconButton>
+            <IconButton size="sm" onClick={handleSettingClick}>
+              <SettingIcon />
+            </IconButton>
+          </Box>
+        )}
+        {settingMode && (
+          <Button size="sm" onClick={handleDoneClick}>
+            <Typography level="title-sm">Done</Typography>
+          </Button>
+        )}
         <List
           size="sm"
           sx={{
