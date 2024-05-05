@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
+  basePath: process.env.NODE_ENV === 'production' ? '/mailbox' : '',
   reactStrictMode: true,
   webpack: (config, { isServer, webpack }) => {
     if (!isServer) {
