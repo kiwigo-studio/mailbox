@@ -10,5 +10,6 @@ export type Bucket = {
   name: string;
   region: string;
   credentials: Credentials;
-  emailGroups: EmailGroup[];
 };
+
+export type BucketData = { [key: string]: EmailGroup[] };
