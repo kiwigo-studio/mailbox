@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Bucket } from '@/models/bucket';
 import { useBucketsStore } from '@/stores/bucketStore';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
@@ -13,6 +14,7 @@ import IconButton from '@mui/joy/IconButton';
 import SvgIcon from '@mui/joy/SvgIcon';
 import AddCircleIcon from '@mui/icons-material/AddCircleRounded';
 import SettingIcon from '@mui/icons-material/Settings';
+import BucketFormModal from './BucketFormModal';
 
 type Props = {
   selectedBucketId: string;
@@ -20,11 +22,14 @@ type Props = {
 };
 
 export default function Sidebar({ selectedBucketId, selectBucket }: Props) {
-  const [buckets, setBuckets] = useBucketsStore();
+  const [buckets] = useBucketsStore();
   const [settingMode, setSettingMode] = useState(false);
+  const [showBucketForm, setShowBucketForm] = useState(false);
+  const [editBucket, setEditBucket] = useState<Bucket | null>(null);
 
   const handleAddClick = () => {
-    console.log('Add clicked');
+    setShowBucketForm(true);
+    setEditBucket(null);
   };
 
   const handleSettingClick = () => {
@@ -33,6 +38,15 @@ export default function Sidebar({ selectedBucketId, selectBucket }: Props) {
 
   const handleDoneClick = () => {
     setSettingMode(false);
+  };
+
+  const handleBucketClick = (bucket: Bucket) => {
+    if (!settingMode) {
+      selectBucket(bucket.id);
+      return;
+    }
+    setShowBucketForm(true);
+    setEditBucket(bucket);
   };
 
   return (
@@ -46,7 +60,7 @@ export default function Sidebar({ selectedBucketId, selectBucket }: Props) {
         },
         transition: 'transform 0.4s, width 0.4s',
         display: { xs: 'none', md: 'flex' },
-        zIndex: 10000,
+        zIndex: 999,
         height: 'calc(100vh - 16px)',
         width: '200px',
         top: 0,
@@ -94,11 +108,14 @@ export default function Sidebar({ selectedBucketId, selectBucket }: Props) {
             '--ListItem-radius': theme => theme.vars.radius.sm,
           }}
         >
-          {buckets.map(({ id, name }) => (
-            <ListItem key={id}>
-              <ListItemButton selected={id === selectedBucketId} onClick={() => selectBucket(id)}>
+          {buckets.map(bucket => (
+            <ListItem key={bucket.id}>
+              <ListItemButton
+                selected={bucket.id === selectedBucketId && !settingMode}
+                onClick={() => handleBucketClick(bucket)}
+              >
                 <ListItemContent>
-                  <Typography level="title-sm">{name}</Typography>
+                  <Typography level="title-sm">{bucket.name}</Typography>
                 </ListItemContent>
               </ListItemButton>
             </ListItem>
@@ -133,6 +150,7 @@ export default function Sidebar({ selectedBucketId, selectBucket }: Props) {
           &nbsp;&nbsp;Contribute
         </Typography>
       </Link>
+      <BucketFormModal open={showBucketForm} setOpen={setShowBucketForm} editBucket={editBucket} />
     </Sheet>
   );
 }
