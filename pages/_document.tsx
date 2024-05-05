@@ -9,7 +9,7 @@ export default function Document() {
         <link
           rel="icon"
           type="image/png"
-          href="https://raw.githubusercontent.com/kiwigo-studio/mailbox/master/favicon.png"
+          href="https://raw.githubusercontent.com/kiwigo-studio/mailbox/master/public/favicon.png"
         ></link>
       </Head>
       <body>
