@@ -4,6 +4,7 @@ import { useBucketsStore } from '@/stores/bucketStore';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
 import Sheet from '@mui/joy/Sheet';
+import Stack from '@mui/joy/Stack';
 import Link from '@mui/joy/Link';
 import List from '@mui/joy/List';
 import ListItem from '@mui/joy/ListItem';
@@ -14,6 +15,8 @@ import IconButton from '@mui/joy/IconButton';
 import SvgIcon from '@mui/joy/SvgIcon';
 import AddCircleIcon from '@mui/icons-material/AddCircleRounded';
 import SettingIcon from '@mui/icons-material/Settings';
+import EditIcon from '@mui/icons-material/EditRounded';
+import DeleteIcon from '@mui/icons-material/RemoveCircleRounded';
 import BucketFormModal from './BucketFormModal';
 
 type Props = {
@@ -22,7 +25,7 @@ type Props = {
 };
 
 export default function Sidebar({ selectedBucketId, selectBucket }: Props) {
-  const [buckets] = useBucketsStore();
+  const [buckets, setBuckets] = useBucketsStore();
   const [settingMode, setSettingMode] = useState(false);
   const [showBucketForm, setShowBucketForm] = useState(false);
   const [editBucket, setEditBucket] = useState<Bucket | null>(null);
@@ -47,6 +50,11 @@ export default function Sidebar({ selectedBucketId, selectBucket }: Props) {
     }
     setShowBucketForm(true);
     setEditBucket(bucket);
+  };
+
+  const handleDeleteClick = (bucket: Bucket) => {
+    if (!confirm(`Are you sure to delete ${bucket.name}?`)) return;
+    setBuckets(buckets.filter(b => b.id !== bucket.id));
   };
 
   return (
@@ -109,13 +117,35 @@ export default function Sidebar({ selectedBucketId, selectBucket }: Props) {
           }}
         >
           {buckets.map(bucket => (
-            <ListItem key={bucket.id}>
+            <ListItem
+              key={bucket.id}
+              startAction={
+                settingMode && (
+                  <IconButton color="danger" size="xs" onClick={() => handleDeleteClick(bucket)}>
+                    <DeleteIcon color="error" sx={{ width: '18px', height: '18px' }} />
+                  </IconButton>
+                )
+              }
+            >
               <ListItemButton
                 selected={bucket.id === selectedBucketId && !settingMode}
                 onClick={() => handleBucketClick(bucket)}
               >
                 <ListItemContent>
-                  <Typography level="title-sm">{bucket.name}</Typography>
+                  <Stack direction="row" justifyContent="space-between" spacing={1}>
+                    <Typography
+                      level="title-sm"
+                      sx={{
+                        display: '-webkit-box',
+                        overflow: 'hidden',
+                        WebkitBoxOrient: 'vertical',
+                        WebkitLineClamp: 1,
+                      }}
+                    >
+                      {bucket.name}
+                    </Typography>
+                    {settingMode && <EditIcon />}
+                  </Stack>
                 </ListItemContent>
               </ListItemButton>
             </ListItem>
