@@ -4,6 +4,7 @@ import Box from '@mui/joy/Box';
 import Sidebar from '@/components/Sidebar';
 import MailList from '@/components/MailList';
 import Content from '@/components/Content';
+import NoBucket from '@/components/NoBucket';
 import { EmailGroup } from '@/models/email';
 import { Bucket, BucketData } from '@/models/bucket';
 import { useBucketsStore } from '@/stores/bucketStore';
@@ -17,6 +18,12 @@ export default function Home() {
   const [selectedEmailGroup, setSelectedEmailGroup] = useState<EmailGroup | null>(null);
 
   useEffect(() => {
+    if (buckets.length === 0) {
+      setSelectedBucketId('');
+      setBucketData({});
+      return;
+    }
+
     const newBucketData: BucketData = {};
     let fetchPromises: Promise<[Bucket, EmailGroup[]]>[] = [];
     buckets.forEach(bucket => {
@@ -53,9 +60,14 @@ export default function Home() {
         <title>Kiwigo Mailbox</title>
       </Head>
       <Sidebar selectedBucketId={selectedBucketId} selectBucket={handleBucketSelect} />
-      <MailList emailGroups={emailGroups} onSelectEmailGroup={handleEmailGroupSelect} />
-      <div style={{ backgroundColor: 'black', height: '100vh', width: 1 }} />
-      <Content emails={selectedEmailGroup?.emails} />
+      {buckets.length !== 0 && (
+        <>
+          <MailList emailGroups={emailGroups} onSelectEmailGroup={handleEmailGroupSelect} />
+          <div style={{ backgroundColor: 'black', height: '100vh', width: 1 }} />
+          <Content emails={selectedEmailGroup?.emails} />
+        </>
+      )}
+      {buckets.length === 0 && <NoBucket />}
     </Box>
   );
 }
