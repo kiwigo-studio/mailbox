@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Bucket } from '@/models/bucket';
 import { useBucketsStore } from '@/stores/bucketStore';
 import Box from '@mui/joy/Box';
@@ -29,6 +29,14 @@ export default function Sidebar({ selectedBucketId, selectBucket }: Props) {
   const [settingMode, setSettingMode] = useState(false);
   const [showBucketForm, setShowBucketForm] = useState(false);
   const [editBucket, setEditBucket] = useState<Bucket | null>(null);
+
+  useEffect(() => {
+    if (buckets.length === 0) return;
+
+    if (!selectedBucketId || selectedBucketId === '' || !buckets.find(b => b.id === selectedBucketId)) {
+      selectBucket(buckets[0].id);
+    }
+  }, [buckets, selectedBucketId, selectBucket]);
 
   const handleAddClick = () => {
     setShowBucketForm(true);
