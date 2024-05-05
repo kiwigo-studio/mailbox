@@ -121,7 +121,7 @@ export default function Sidebar({ selectedBucketId, selectBucket }: Props) {
               key={bucket.id}
               startAction={
                 settingMode && (
-                  <IconButton color="danger" size="xs" onClick={() => handleDeleteClick(bucket)}>
+                  <IconButton color="danger" size="sm" onClick={() => handleDeleteClick(bucket)}>
                     <DeleteIcon color="error" sx={{ width: '18px', height: '18px' }} />
                   </IconButton>
                 )
