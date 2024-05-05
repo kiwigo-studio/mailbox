@@ -56,7 +56,7 @@ export default function BucketForm({ editBucket, onSubmit }: Props) {
   });
 
   return (
-    <Stack component="form" onSubmit={onSubmitHandler} spacing={2}>
+    <Stack component="form" autoComplete="off" onSubmit={onSubmitHandler} spacing={2}>
       <FormControl>
         <FormLabel>Bucket region</FormLabel>
         <Autocomplete
@@ -102,7 +102,7 @@ export default function BucketForm({ editBucket, onSubmit }: Props) {
           type="password"
           slotProps={{
             input: {
-              autoComplete: 'off',
+              autoComplete: 'false',
             },
           }}
           sx={{ width }}
