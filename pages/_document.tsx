@@ -6,6 +6,11 @@ export default function Document() {
       <Head>
         <meta charSet="utf-8" />
         <meta name="description" content="Best mailbox for AWS SES + s3 bucket." />
+        <link
+          rel="icon"
+          type="image/png"
+          href="https://raw.githubusercontent.com/kiwigo-studio/mailbox/master/favicon.png"
+        ></link>
       </Head>
       <body>
         <Main />
