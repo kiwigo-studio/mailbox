@@ -84,7 +84,13 @@ export default function Sidebar({ selectedBucketId, selectBucket }: Props) {
           ))}
         </List>
       </Box>
-      <Link href="https://github.com/kiwigo-studio/mailbox" underline="none" target="_blank">
+      <Link
+        href="https://github.com/kiwigo-studio/mailbox"
+        underline="none"
+        target="_blank"
+        rel="noopener"
+        sx={{ justifyContent: 'center' }}
+      >
         <SvgIcon
           viewBox="0 0 512 512"
           fill="none"
