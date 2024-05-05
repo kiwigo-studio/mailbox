@@ -50,7 +50,7 @@ export default function Home() {
   return (
     <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
       <Head>
-        <title>Mailbox</title>
+        <title>Kiwigo Mailbox</title>
       </Head>
       <Sidebar selectedBucketId={selectedBucketId} selectBucket={handleBucketSelect} />
       <MailList emailGroups={emailGroups} onSelectEmailGroup={handleEmailGroupSelect} />
