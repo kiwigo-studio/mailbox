@@ -85,11 +85,29 @@ export default function BucketForm({ editBucket, onSubmit }: Props) {
       </FormControl>
       <FormControl>
         <FormLabel>Access Key ID</FormLabel>
-        <Input type="password" sx={{ width }} {...register('credentials.accessKeyId')} />
+        <Input
+          type="password"
+          slotProps={{
+            input: {
+              autoComplete: 'off',
+            },
+          }}
+          sx={{ width }}
+          {...register('credentials.accessKeyId')}
+        />
       </FormControl>
       <FormControl>
         <FormLabel>Secret Access Key</FormLabel>
-        <Input type="password" sx={{ width }} {...register('credentials.secretAccessKey')} />
+        <Input
+          type="password"
+          slotProps={{
+            input: {
+              autoComplete: 'off',
+            },
+          }}
+          sx={{ width }}
+          {...register('credentials.secretAccessKey')}
+        />
       </FormControl>
       <Stack direction="row" spacing={2} justifyContent="flex-end">
         <Button variant="outlined" color="neutral" onClick={onSubmit}>
