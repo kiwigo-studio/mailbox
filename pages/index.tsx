@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Head from 'next/head';
 import Box from '@mui/joy/Box';
 import Sidebar from '@/components/Sidebar';
 import MailList from '@/components/MailList';
@@ -48,6 +49,9 @@ export default function Home() {
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
+      <Head>
+        <title>Mailbox</title>
+      </Head>
       <Sidebar selectedBucketId={selectedBucketId} selectBucket={handleBucketSelect} />
       <MailList emailGroups={emailGroups} onSelectEmailGroup={handleEmailGroupSelect} />
       <div style={{ backgroundColor: 'black', height: '100vh', width: 1 }} />
