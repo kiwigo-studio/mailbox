@@ -1,3 +1,6 @@
+![Github Actions Status](https://github.com/kiwigo-studio/mailbox/actions/workflows/nextjs.yml/badge.svg)
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
