@@ -1,7 +1,6 @@
 import { Html, Head, Main, NextScript } from 'next/document';
 
 export default function Document() {
-  const iconUrl = 'https://raw.githubusercontent.com/kiwigo-studio/mailbox/master/public/favicon.png';
   return (
     <Html lang="en">
       <Head>
@@ -12,8 +11,8 @@ export default function Document() {
         <meta property="og:description" content="Best mailbox for AWS SES + s3 bucket" />
         <meta property="og:type" content="website" />
         <meta name="google-site-verification" content="XkD9pdjpDfPgzC-Tvw2amJEl1Z_z6tw7YSHfo1Y8BTc" />
-        <link rel="apple-touch-icon" href={iconUrl} />
-        <link rel="icon" type="image/png" href={iconUrl} />
+        <link rel="apple-touch-icon" href="./favicon.icon" />
+        <link rel="icon" type="image/png" href="./favicon.icon" />
       </Head>
       <body>
         <Main />
