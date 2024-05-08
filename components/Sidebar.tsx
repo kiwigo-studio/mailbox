@@ -20,12 +20,16 @@ import DeleteIcon from '@mui/icons-material/RemoveCircleRounded';
 import BucketFormModal from './BucketFormModal';
 
 type Props = {
+  buckets: Bucket[];
   selectedBucketId: string;
   selectBucket: (bucketId: string) => void;
+  onBucketChange: (bucket: Bucket) => void;
+  onBucketDelete: (bucketId: string) => void;
 };
 
-export default function Sidebar({ selectedBucketId, selectBucket }: Props) {
-  const [buckets, setBuckets] = useBucketsStore();
+export default function Sidebar(props: Props) {
+  const { buckets, selectedBucketId } = props;
+  const { selectBucket, onBucketChange, onBucketDelete } = props;
   const [settingMode, setSettingMode] = useState(false);
   const [showBucketForm, setShowBucketForm] = useState(false);
   const [editBucket, setEditBucket] = useState<Bucket | null>(null);
@@ -62,7 +66,7 @@ export default function Sidebar({ selectedBucketId, selectBucket }: Props) {
 
   const handleDeleteClick = (bucket: Bucket) => {
     if (!confirm(`Are you sure to delete ${bucket.name}?`)) return;
-    setBuckets(buckets.filter(b => b.id !== bucket.id));
+    onBucketDelete(bucket.id);
   };
 
   return (
@@ -188,7 +192,12 @@ export default function Sidebar({ selectedBucketId, selectBucket }: Props) {
           &nbsp;&nbsp;Contribute
         </Typography>
       </Link>
-      <BucketFormModal open={showBucketForm} setOpen={setShowBucketForm} editBucket={editBucket} />
+      <BucketFormModal
+        open={showBucketForm}
+        onSubmit={onBucketChange}
+        setOpen={setShowBucketForm}
+        editBucket={editBucket}
+      />
     </Sheet>
   );
 }

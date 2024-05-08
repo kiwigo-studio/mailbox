@@ -6,11 +6,12 @@ import BucketForm from './BucketForm';
 
 type Props = {
   open: boolean;
-  setOpen: (state: boolean) => void;
   editBucket: Bucket | null;
+  onSubmit: (bucket: Bucket) => void;
+  setOpen: (state: boolean) => void;
 };
 
-export default function BucketFormModal({ open, setOpen, editBucket }: Props) {
+export default function BucketFormModal({ open, editBucket, onSubmit, setOpen }: Props) {
   const handleClose = (isBackdropClick: boolean) => {
     if (isBackdropClick) {
       return;
@@ -25,7 +26,7 @@ export default function BucketFormModal({ open, setOpen, editBucket }: Props) {
       sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
     >
       <ModalDialog>
-        <BucketForm editBucket={editBucket} onSubmit={() => setOpen(false)} />
+        <BucketForm editBucket={editBucket} onSubmit={onSubmit} handleClose={() => setOpen(false)} />
       </ModalDialog>
     </Modal>
   );

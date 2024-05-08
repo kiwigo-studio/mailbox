@@ -9,17 +9,17 @@ import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
 import Stack from '@mui/joy/Stack';
 import Button from '@mui/joy/Button';
-import { useBucketsStore } from '@/stores/bucketStore';
 
 type Props = {
   editBucket: Bucket | null;
-  onSubmit: () => void;
+  onSubmit: (bucket: Bucket) => void;
+  handleClose: () => void;
+  withoutCancel?: boolean;
 };
 
 const width = '100%';
 
-export default function BucketForm({ editBucket, onSubmit }: Props) {
-  const [_, setBuckets] = useBucketsStore();
+export default function BucketForm({ editBucket, onSubmit, handleClose, withoutCancel = false }: Props) {
   const {
     register,
     handleSubmit,
@@ -39,20 +39,8 @@ export default function BucketForm({ editBucket, onSubmit }: Props) {
   }
 
   const onSubmitHandler = handleSubmit(data => {
-    if (editBucket) {
-      setBuckets(buckets => {
-        const index = buckets.findIndex(bucket => bucket.id === editBucket.id);
-        if (index === -1) {
-          return buckets;
-        }
-        const newBuckets = [...buckets];
-        newBuckets[index] = data;
-        return newBuckets;
-      });
-    } else {
-      setBuckets(buckets => [...buckets, data]);
-    }
-    onSubmit();
+    onSubmit(data);
+    handleClose();
   });
 
   return (
@@ -110,7 +98,14 @@ export default function BucketForm({ editBucket, onSubmit }: Props) {
         />
       </FormControl>
       <Stack direction="row" spacing={2} justifyContent="flex-end">
-        <Button variant="outlined" color="neutral" onClick={onSubmit}>
+        <Button
+          variant="outlined"
+          color="neutral"
+          onClick={handleClose}
+          sx={{
+            display: withoutCancel ? 'none' : 'block',
+          }}
+        >
           Cancel
         </Button>
         <Button type="submit" disabled={!isValid} color="primary">
