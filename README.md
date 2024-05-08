@@ -7,7 +7,7 @@
 
 ![Github Actions Status](https://github.com/kiwigo-studio/mailbox/actions/workflows/nextjs.yml/badge.svg) ![License: GPL-3.0](https://img.shields.io/github/license/kiwigo-studio/mailbox)
 
-[Website](https://kiwigo-studio.github.io/mailbox/)｜[Demo](https://mailbox.kiwigo.studio/demo)
+[Website](https://kiwigo-studio.github.io/mailbox/)｜[Demo](https://kiwigo-studio.github.io/mailbox/demo)
 
 Kiwigo Mailbox is a web application that supports to read emails from multiple AWS S3 buckets.
 
