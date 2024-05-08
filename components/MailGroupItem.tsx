@@ -45,19 +45,26 @@ export default function MailGroupItem({ emailGroup, isSelected }: Props) {
         <Typography level="body-xs" textColor="white" textAlign="left" noWrap>
           {emailGroup.subject}
         </Typography>
-        {emailGroup.hasAttachment && (
-          <AttachFileIcon
-            sx={{ w: '16px', height: '16px', transform: 'rotate(45deg)', color: isSelected ? 'white' : 'neutral.400' }}
-          />
-        )}
-        {emailGroup.emails.length > 1 && (
-          <Stack direction="row" alignItems="center" spacing={0}>
-            <Typography level="body-xs" textColor="primary.300">
-              {emailGroup.emails.length}
-            </Typography>
-            <ExpandCircleIcon sx={{ w: '14px', height: '14px', color: 'primary.300', transform: 'rotate(-90deg)' }} />
-          </Stack>
-        )}
+        <Stack direction="row" spacing={0.5} alignItems="center">
+          {emailGroup.hasAttachment && (
+            <AttachFileIcon
+              sx={{
+                w: '16px',
+                height: '16px',
+                transform: 'rotate(45deg)',
+                color: isSelected ? 'white' : 'neutral.400',
+              }}
+            />
+          )}
+          {emailGroup.emails.length > 1 && (
+            <Stack direction="row" alignItems="center" spacing={0}>
+              <Typography level="body-xs" textColor="primary.300">
+                {emailGroup.emails.length}
+              </Typography>
+              <ExpandCircleIcon sx={{ w: '14px', height: '14px', color: 'primary.300', transform: 'rotate(-90deg)' }} />
+            </Stack>
+          )}
+        </Stack>
       </Stack>
       <Typography
         sx={{
