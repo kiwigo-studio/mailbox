@@ -11,7 +11,7 @@ import { useBucketsStore } from '@/stores/bucketStore';
 import { fetchAndProcessEmails } from '@/utils/FetchAndProcessEmails';
 
 export default function Home() {
-  const [buckets] = useBucketsStore();
+  const [buckets, setBuckets] = useBucketsStore();
   const [bucketData, setBucketData] = useState<BucketData>({});
   const [selectedBucketId, setSelectedBucketId] = useState('');
   const [emailGroups, setEmailGroups] = useState<EmailGroup[]>([]);
@@ -54,12 +54,35 @@ export default function Home() {
   const handleBucketSelect = (bucketId: string) => setSelectedBucketId(bucketId);
   const handleEmailGroupSelect = (emailGroup: EmailGroup) => setSelectedEmailGroup(emailGroup);
 
+  const handleBucketChange = (bucket: Bucket) => {
+    setBuckets(pre => {
+      const newBuckets = [...pre];
+      const index = newBuckets.findIndex(b => b.id === bucket.id);
+      if (index === -1) {
+        newBuckets.push(bucket);
+      } else {
+        newBuckets[index] = bucket;
+      }
+      return newBuckets;
+    });
+  };
+
+  const handleBucketDelete = (bucketId: string) => {
+    setBuckets(pre => pre.filter(b => b.id !== bucketId));
+  };
+
   return (
     <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
       <Head>
         <title>Kiwigo Mailbox</title>
       </Head>
-      <Sidebar selectedBucketId={selectedBucketId} selectBucket={handleBucketSelect} />
+      <Sidebar
+        buckets={buckets}
+        selectedBucketId={selectedBucketId}
+        selectBucket={handleBucketSelect}
+        onBucketChange={handleBucketChange}
+        onBucketDelete={handleBucketDelete}
+      />
       {buckets.length !== 0 && (
         <>
           <MailList emailGroups={emailGroups} onSelectEmailGroup={handleEmailGroupSelect} />
@@ -67,7 +90,7 @@ export default function Home() {
           <Content emails={selectedEmailGroup?.emails} />
         </>
       )}
-      {buckets.length === 0 && <NoBucket />}
+      {buckets.length === 0 && <NoBucket onCreate={handleBucketChange} />}
     </Box>
   );
 }
