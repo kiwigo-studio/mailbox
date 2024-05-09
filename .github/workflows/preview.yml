@@ -1,4 +1,3 @@
-# .github/workflows/preview.yml
 name: Deploy PR previews
 
 on:
@@ -9,22 +8,54 @@ on:
       - synchronize
       - closed
 
-concurrency: preview-${{ github.ref }}
+concurrency: preview-${{ github.head_ref }}
 
 jobs:
   deploy-preview:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    if: github.event.action != 'closed'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install and Build
-        if: github.event.action != 'closed'
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Detect package manager
+        id: detect-package-manager
         run: |
-          npm install
-          npm run build
+          if [ -f "yarn.lock" ]; then
+            echo "manager=yarn" >> $GITHUB_OUTPUT
+            echo "command=install" >> $GITHUB_OUTPUT
+            echo "runner=yarn" >> $GITHUB_OUTPUT
+          elif [ -f "package.json" ]; then
+            echo "manager=npm" >> $GITHUB_OUTPUT
+            echo "command=ci" >> $GITHUB_OUTPUT
+            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
+          else
+            echo "Unable to determine package manager"
+            exit 1
+          fi
+
+      - name: Restore cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
+
+      - name: Install dependencies
+        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+
+      - name: Build with Next.js
+        run: ${{ steps.detect-package-manager.outputs.runner }} next build
 
       - name: Deploy PR Preview
-        uses: rossjrw/pr-preview-action@v1.4.7
+        uses: actions/upload-pages-artifact@v3
         with:
-          source-dir: ./build/
+          path: ./out
