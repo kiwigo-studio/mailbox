@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
@@ -11,6 +12,7 @@ import { EmailGroup } from '@/models/email';
 import { demoBucket, demoEmailGroups } from '@/models/demo';
 
 export default function Demo() {
+  const router = useRouter();
   const [selectedEmailGroup, setSelectedEmailGroup] = useState<EmailGroup | null>(null);
 
   const handleBucketChange = () => {};
@@ -36,7 +38,7 @@ export default function Demo() {
         sx={{ justifyContent: 'space-between' }}
       >
         <Typography>This is a Demo page.</Typography>
-        <Button component="a" href="/">
+        <Button component="a" href={router.basePath}>
           Leave
         </Button>
       </Snackbar>
