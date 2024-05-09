@@ -56,6 +56,6 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
 
       - name: Deploy PR Preview
-        uses: actions/upload-pages-artifact@v3
+        uses: rossjrw/pr-preview-action@v1.4.7
         with:
           path: ./out
