@@ -74,7 +74,7 @@ export default function Home() {
   return (
     <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
       <Head>
-        <title>Kiwigo Mailbox</title>
+        <title>Kiwigo Mailbox｜Best Webmail Client for AWS SES and S3 Buckets</title>
       </Head>
       <Sidebar
         buckets={buckets}

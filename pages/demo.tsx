@@ -20,7 +20,7 @@ export default function Demo() {
   return (
     <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
       <Head>
-        <title>Demo｜Kiwigo Mailbox</title>
+        <title>Demo｜Kiwigo Mailbox｜Best Webmail Client for AWS SES and S3 Buckets</title>
       </Head>
       <Sidebar
         buckets={[demoBucket]}
