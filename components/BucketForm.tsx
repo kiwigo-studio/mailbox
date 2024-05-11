@@ -53,7 +53,7 @@ export default function BucketForm({ editBucket, onSubmit, handleClose, withoutC
           defaultValue={defaultRegion}
           getOptionLabel={option => option.regionName}
           getOptionKey={option => option.region}
-          sx={{ width }}
+          sx={{ width: '280px' }}
           filterOptions={(options, params) =>
             options.filter(
               option =>
@@ -97,18 +97,19 @@ export default function BucketForm({ editBucket, onSubmit, handleClose, withoutC
           {...register('credentials.secretAccessKey')}
         />
       </FormControl>
-      <Stack direction="row" spacing={2} justifyContent="flex-end">
+      <Stack direction="row" justifyContent="flex-end">
         <Button
           variant="outlined"
           color="neutral"
           onClick={handleClose}
           sx={{
             display: withoutCancel ? 'none' : 'block',
+            mr: 2,
           }}
         >
           Cancel
         </Button>
-        <Button type="submit" disabled={!isValid} color="primary">
+        <Button type="submit" disabled={!isValid} color="primary" sx={{ width: withoutCancel ? '100%' : 'auto' }}>
           Submit
         </Button>
       </Stack>
