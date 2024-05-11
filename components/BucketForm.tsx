@@ -53,7 +53,7 @@ export default function BucketForm({ editBucket, onSubmit, handleClose, withoutC
           defaultValue={defaultRegion}
           getOptionLabel={option => option.regionName}
           getOptionKey={option => option.region}
-          sx={{ width }}
+          sx={{ width: '280px' }}
           filterOptions={(options, params) =>
             options.filter(
               option =>
