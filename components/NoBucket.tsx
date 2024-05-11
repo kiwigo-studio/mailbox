@@ -22,7 +22,6 @@ export default function NoBucket({ onCreate }: { onCreate: (bucket: Bucket) => v
         component="a"
         color="primary"
         variant="soft"
-        target="_blank"
         size="sm"
         href={router.basePath + '/demo'}
         endDecorator={<LaunchIcon fontSize="small" />}
