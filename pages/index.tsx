@@ -85,8 +85,7 @@ export default function Home() {
       />
       {buckets.length !== 0 && (
         <>
-          {/* <MailList emailGroups={emailGroups} onSelectEmailGroup={handleEmailGroupSelect} /> */}
-          <MailList emailGroups={null} onSelectEmailGroup={handleEmailGroupSelect} />
+          <MailList emailGroups={emailGroups} onSelectEmailGroup={handleEmailGroupSelect} />
           <div style={{ backgroundColor: 'black', height: '100vh', width: 1 }} />
           <Content emails={selectedEmailGroup?.emails} />
         </>
