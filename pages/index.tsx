@@ -24,7 +24,6 @@ export default function Home() {
       return;
     }
 
-    const newBucketData: BucketData = {};
     let fetchPromises: Promise<[Bucket, EmailGroup[]]>[] = [];
     buckets.forEach(bucket => {
       if (bucketData[bucket.id]) return;
@@ -34,6 +33,7 @@ export default function Home() {
     if (!fetchPromises.length) return;
 
     Promise.all(fetchPromises).then(results => {
+      const newBucketData: BucketData = {};
       results.forEach(([bucket, emailGroup]) => {
         newBucketData[bucket.id] = emailGroup;
       });
