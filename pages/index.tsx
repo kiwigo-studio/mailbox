@@ -14,7 +14,7 @@ export default function Home() {
   const [buckets, setBuckets] = useBucketsStore();
   const [bucketData, setBucketData] = useState<BucketData>({});
   const [selectedBucketId, setSelectedBucketId] = useState('');
-  const [emailGroups, setEmailGroups] = useState<EmailGroup[]>([]);
+  const [emailGroups, setEmailGroups] = useState<EmailGroup[] | null>(null);
   const [selectedEmailGroup, setSelectedEmailGroup] = useState<EmailGroup | null>(null);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function Home() {
     if (selectedBucketEmailGroups) {
       setEmailGroups(selectedBucketEmailGroups);
     } else {
-      setEmailGroups([]);
+      setEmailGroups(null);
     }
     setSelectedEmailGroup(null);
   }, [buckets, bucketData, selectedBucketId]);
@@ -85,7 +85,8 @@ export default function Home() {
       />
       {buckets.length !== 0 && (
         <>
-          <MailList emailGroups={emailGroups} onSelectEmailGroup={handleEmailGroupSelect} />
+          {/* <MailList emailGroups={emailGroups} onSelectEmailGroup={handleEmailGroupSelect} /> */}
+          <MailList emailGroups={null} onSelectEmailGroup={handleEmailGroupSelect} />
           <div style={{ backgroundColor: 'black', height: '100vh', width: 1 }} />
           <Content emails={selectedEmailGroup?.emails} />
         </>

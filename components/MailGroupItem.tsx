@@ -3,6 +3,7 @@ import { EmailGroup } from '@/models/email';
 import Box from '@mui/joy/Box';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
+import Skeleton from '@mui/joy/Skeleton';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import ExpandCircleIcon from '@mui/icons-material/ExpandCircleDownOutlined';
 
@@ -79,6 +80,17 @@ export default function MailGroupItem({ emailGroup, isSelected }: Props) {
       >
         {emailGroup.text}
       </Typography>
+    </Box>
+  );
+}
+
+export function LoadingMailGroupItem() {
+  return (
+    <Box flexDirection="column" sx={{ px: 2, py: 0.75, width: '100%', display: 'flex' }}>
+      <Skeleton variant="text" level="title-sm" />
+      <Skeleton variant="text" level="body-xs" width="80%" />
+      <Skeleton variant="text" level="body-xs" />
+      <Skeleton variant="text" level="body-xs" width="70%" />
     </Box>
   );
 }
