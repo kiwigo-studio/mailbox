@@ -24,7 +24,7 @@ export default function Document() {
         <meta property="og:url" content="https://kiwigo-studio.github.io/mailbox/" />
         <meta property="og:image" content="https://kiwigo-studio.github.io/mailbox/banner.jpg" />
         <meta name="google-site-verification" content="XkD9pdjpDfPgzC-Tvw2amJEl1Z_z6tw7YSHfo1Y8BTc" />
-        <link rel="apple-touch-icon" href="./favicon.ico" />
+        <link rel="apple-touch-icon" href="./apple-touch.ico" />
         <link rel="icon" type="image/x-icon" href="./favicon.ico" />
       </Head>
       <body>
