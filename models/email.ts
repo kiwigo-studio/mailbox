@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+import makeRandomID from '@/utils/RandomID';
 import * as mailparser from 'mailparser';
 
 export type Contact = {
@@ -42,7 +42,7 @@ export function newEmailGroupList(parsedEmails: mailparser.ParsedMail[]): EmailG
   for (let index = parsedEmails.length - 1; index >= 0; index--) {
     const parsedEmail = parsedEmails[index];
     const email = {
-      messageId: parsedEmail.messageId ?? randomUUID(),
+      messageId: parsedEmail.messageId ?? makeRandomID(16),
       subject: parsedEmail.subject ?? '(No Subject)',
       from: parseContact(parsedEmail.from),
       to: parseContact(parsedEmail.to),
